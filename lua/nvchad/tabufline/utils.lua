@@ -50,6 +50,7 @@ M.style_buf = function(nr, i, w)
 
   local name = filename(buf_name(nr))
   name = name and (gen_unique_name(name, i) or name) or " No Name "
+  local buffer_no = ' ' .. tostring(i)
 
   if name ~= " No Name " then
     local devicon, devicon_hl = require("nvim-web-devicons").get_icon(name)
@@ -61,10 +62,10 @@ M.style_buf = function(nr, i, w)
   end
 
   -- padding around bufname; 15= maxnamelen + 2 icon & space + 2 close icon
-  local pad = math.floor((w - #name - 5) / 2)
+  local pad = math.floor((w - #name - 5 - #buffer_no) / 2)
   pad = pad <= 0 and 1 or pad
 
-  local maxname_len = w - 5
+  local maxname_len = w - 5 - #buffer_no
   name = string.sub(name, 1, maxname_len - 2) .. (#name > maxname_len and ".." or "")
   name = M.txt(name, tbHlName)
 
@@ -84,7 +85,7 @@ M.style_buf = function(nr, i, w)
     close_btn = mod and txt("  ", "BufOffModified") or txt(close_btn, "BufOffClose")
   end
 
-  name = txt(name .. close_btn, "BufO" .. (is_curbuf and "n" or "ff"))
+  name = txt(name ..buffer_no.. close_btn, "BufO" .. (is_curbuf and "n" or "ff"))
 
   return name
 end
