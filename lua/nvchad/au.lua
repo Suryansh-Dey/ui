@@ -5,7 +5,7 @@ local config = require "nvconfig"
 if config.nvdash.load_on_startup then
   local opening_file = vim.api.nvim_buf_get_name(0)
   local is_dir = vim.fn.isdirectory(opening_file) == 1
-  local bufmodifed = vim.api.nvim_get_option_value("modified", { buf = 1 })
+  local bufmodifed = vim.api.nvim_get_option_value("modified", { buf = 0 })
 
   if not bufmodifed and (is_dir or opening_file == "") then
     local current_buffer = vim.api.nvim_get_current_buf()
